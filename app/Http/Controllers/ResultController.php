@@ -66,7 +66,7 @@ class ResultController extends Controller
         $result->folio = $input['uuid'];
         $result->outcome = $input['outcome'];
         $result->reference = $input['reference'];
-        $result->result = $input['result'];
+        $result->result = $input['result'] ? 1 : 0;
 
         if( $test->result()->save($result) ) {
             return response(['message' => 'Register successfully created!', 'data'=>$result], 200);
