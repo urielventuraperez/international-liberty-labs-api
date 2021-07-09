@@ -69,9 +69,12 @@ class ResultController extends Controller
         $result->result = $input['result'] === true ? 1 : 0;
 
         if( $test->result()->save($result) ) {
-            return response(['message' => 'Register successfully created!', 'data'=>$result], 200);
+            return response([
+            'status' => 200,
+            'message' => 'Register successfully created!', 
+            'data'=>$result], 200);
         } else {
-            return response(['message' => 'Server error, try again!', 'data'=>[]], 502);
+            return response(['status' => 502, 'message' => 'Server error, try again!', 'data'=>[]], 502);
         }
     }
 
