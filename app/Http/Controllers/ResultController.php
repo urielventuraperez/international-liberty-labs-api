@@ -126,7 +126,7 @@ class ResultController extends Controller
         ];
 
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-        ->loadView('pdf.report', $data);
+        ->loadView('pdf.report', $data)->setPaper('a4', 'landscape');
         return $pdf->download('Reporte '. $result->test->folio .'.pdf');
     }
 

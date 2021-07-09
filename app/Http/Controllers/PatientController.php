@@ -20,7 +20,7 @@ class PatientController extends Controller
     }
 
     public function index() {
-        $patients = Patient::paginate(10);
+        $patients = Patient::all();
 
         if ($patients) {
             return response([
