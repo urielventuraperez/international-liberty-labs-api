@@ -42,6 +42,7 @@ $router->group(['prefix' => 'api', 'middleware' => ['auth', 'client']], function
     $router->get('/patients/{id}/tests', 'PatientController@index');
     $router->get('patients/{id}', 'PatientController@show');
     $router->get('/patient/find', 'PatientController@findPatientByEmail');
+    $router->get('/patients/find', 'PatientController@findPatientsByEmail');
     $router->post('/patients','PatientController@create');
     $router->post('/patients/{id}','PatientController@update');
     $router->delete('/patients/{id}','PatientController@delete');

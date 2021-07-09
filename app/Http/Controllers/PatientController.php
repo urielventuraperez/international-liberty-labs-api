@@ -103,4 +103,12 @@ class PatientController extends Controller
             'data'=>$patient], 200);
     }
 
+    public function findPatientsByEmail(Request $request) {
+        $patient = Patient::where('email', 'like', '%' . $request->query('email') . '%')->get();
+
+        return response([
+            'status' => 200, 
+            'message' => 'Searching patients...', 
+            'data'=>$patient], 200);
+    }
 }
