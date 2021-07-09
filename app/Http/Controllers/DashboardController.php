@@ -21,19 +21,29 @@ class DashboardController extends Controller
     }
 
     public function index() {
-        $patient = Patient::all();
-        $attendingToday = Test::whereDate('created_at', Carbon::today())->get();
-        $test = Test::all();
-        $result = Result::all();
-        
+        $patient = Patient::all()->count();
+        $attendingToday = Test::whereDate('created_at', Carbon::today())->count();
+        $test = Test::count();
+        $result = Result::count();
+
+        $pcrTotal = Test::where('test_type_id', 2)->count();
+        $antigenTotal = Test::where('test_type_id', 1)->count();
+
+        $negativesTest = Result::where('result', false)->count();
+        $positivesTest = Result::where('result', true)->count();
+
         return response([
             'status'=>true,
             'message'=>'',
             'data'=>[
-                'patients' => $patient->count(),
-                'attendingToday' => $attendingToday->count(),
-                'tests' => $test->count(),
-                'results' => $result->count()
+                'patients' => $patient,
+                'attendingToday' => $attendingToday,
+                'tests' => $test,
+                'results' => $result,
+                'pcr' => $pcrTotal,
+                'antigen' => $antigenTotal,
+                'negatives' => $negativesTest,
+                'positives' => $positivesTest
             ]
         ]);
     }
