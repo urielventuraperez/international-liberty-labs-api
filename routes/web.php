@@ -52,6 +52,7 @@ $router->group(['prefix' => 'api', 'middleware' => ['auth', 'client']], function
     // Create test
     $router->post('/patients/{patientId}/tests','TestController@create');
     $router->get('/tests', 'TestController@index');
+    $router->get('/tests/search', 'TestController@findTestByConditions');
     $router->get('/tests/{folio}', 'TestController@show');
     $router->post('/tests/{id}','TestController@update');
     $router->delete('/tests/{id}','TestController@delete');

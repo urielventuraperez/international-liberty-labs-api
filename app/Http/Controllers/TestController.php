@@ -110,13 +110,19 @@ class TestController extends Controller
         return Test::where('patient_id', '=', $id);
     }
 
-    public function findTestByFolio(Request $request) {
-        $patient = Patient::where('folio', 'like', '%' . $request->query('folio') . '%')->get();
+    public function findTestByConditions(Request $request) {
+        $folio = $request->has('folio') ? $request->query('folio') : '';
+        $flight_time = $request->has('flight_time') ? $request->query('flight_time') : '';
+        $created_at = $request->has('created_at') ? $request->query('created_at') : '';
+        $test = Test::where('folio', 'like', '%' . $folio . '%')
+                        ->orWhere('created_at', '=', $created_at)
+                        ->orWhere('flight_time', '=', $flight_time)
+                        ->get();
 
         return response([
             'status' => 200, 
-            'message' => 'Patient is registered, continue with the test.', 
-            'data'=>$patient], 200);
+            'message' => 'Test was filter succesfuly.', 
+            'data'=>$test], 200);
     }
 
 }
