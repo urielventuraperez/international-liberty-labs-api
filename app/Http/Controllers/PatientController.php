@@ -83,11 +83,12 @@ class PatientController extends Controller
     public function delete($id) {
         $patient = Patient::findOrFail($id);
 
-        if(!$patient->delete()) {
-            return response(['status' => 422, 'message' => 'retry again, cannot delete the register', 'data'=>[]], 422);
+        if($patient) {
+            $patient->tests()->delete();
+            $patient->delete();
+            return response(['status' => 200, 'message' => 'Register successfully deleted!', 'data'=>[]], 200);
         }
-
-        return response(['status' => 200, 'message' => 'Register successfully deleted!', 'data'=>[]], 200);
+        return response(['status' => 422, 'message' => 'retry again, cannot delete the register', 'data'=>[]], 422);
     }
 
     public function findPatientByEmail(Request $request) {
