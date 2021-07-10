@@ -53,9 +53,12 @@ class PatientController extends Controller
 
         if($validator->fails()){
             return response(['data' => [], 'message' =>  $validator->errors()], 422);
-        }
+        }      
 
         $input = $request->all();
+        
+        $verifyPatient = Patient::where('email', $input['email'])->first();  
+
         $patient = new Patient();
         $patient = $patient::create($input);
 
@@ -92,7 +95,7 @@ class PatientController extends Controller
     }
 
     public function findPatientByEmail(Request $request) {
-        $patient = Patient::where('email', 'like', '%' . $request->query('email') . '%')->first();
+        $patient = Patient::where('email', $request->query('email'))->first();
 
         if(!$patient){
             return response(['status' => 200, 'message' => 'The patient is not registered.', 'data'=>[]]);
